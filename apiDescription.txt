@@ -1,0 +1,20 @@
+api problem
+
+We have a system that allows both an REST API and web application. In the system, there are users, products, purchase orders and entitlements.
+
+A user can buy an entitlement by placing a purchase order for the product they want to buy.
+
+A purchase order requires the following information in order to complete a purchase:
+
+user
+product(s) to buy
+payment (credit card)
+There exists an API to add, find, and update users and products.
+
+There exists an API to accept purchase orders. If a purchase is successful, the user receives their entitlement.
+
+There exists an API to find entitlements.
+
+The web application also provides the same functionality as the API.
+
+Your goal is to create a test suite for this system. What would you test?
