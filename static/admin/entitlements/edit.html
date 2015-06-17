@@ -20,29 +20,29 @@
 		console.log(urlParams);
         $.ajax({
             type: 'GET',
-            url: '/products/' + urlParams['id'],
+            url: '/entitlements/' + urlParams['id'],
             dataType: 'json',
             success: function(data) {
                 console.log(data)
-                $("[name='name']").val(data.name);
-                 $("[name='description']").val(data.description);
-                 $("[name='price']").val(data.price);
+                $("[name='userId']").val(data.userId);
+                 $("[name='productId']").val(data.productId);
+                 $("[name='active']").prop("checked", data.active);
             }
         });
     </script>
 <body>
 	<form action='/products' method='PUT'>
 		<div>
-			<span style='float: left; width: 100px'>Name: </span><input
-				type='text' name='name' />
+			<span style='float: left; width: 100px'>userId: </span><input
+				type='text' name='userId' />
 		</div>
 		<div>
-			<span style='float: left; width: 100px'>Description: </span><input
-				type='text' name='description' />
+			<span style='float: left; width: 100px'>productId: </span><input
+				type='text' name='productId' />
 		</div>
 		<div>
-			<span style='float: left; width: 100px'>price: </span><input
-				type='text' name='price' />
+			<span style='float: left; width: 100px'>active: </span><input
+				type='checkbox' name='active' />
 		</div>
 		<input type='submit' value='submit'>
 	</form>

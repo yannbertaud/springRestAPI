@@ -69,10 +69,13 @@ public class ProductsController{
     public ResponseEntity<Product> createProduct(@RequestBody Product item) {
     	int countBefore = this.getProductCount();
     	JSONArray itemsJson = dataUtil.getItems();
+    	item.setId(countBefore);
     	System.out.println("creating product\n" + item.toString());
     	itemsJson.add(item.toJsonObject());
     	
     	System.out.println("new user count: " + itemsJson.size() + ", was: " + countBefore);
+    	System.out.println("saving file");
+    	dataUtil.save();
     	return new ResponseEntity<Product> (item, HttpStatus.CREATED);
     }
 	

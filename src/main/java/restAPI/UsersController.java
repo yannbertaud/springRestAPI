@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 import main.java.exceptions.ItemNotFoundException;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -78,13 +77,29 @@ public class UsersController {
     
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> createUser(@RequestBody User item) {
+    	ResponseEntity<User> responseEntity = new ResponseEntity<User>(HttpStatus.CREATED);
+    	
     	int countBefore = this.getUsersCount();
     	JSONArray itemsJson = dataUtil.getItems();
-    	System.out.println("creating user\n" + item.toString());
-    	itemsJson.add(item.toJsonObject());
+    	boolean isNew = true;
     	
-    	System.out.println("new user count: " + itemsJson.size() + ", was: " + countBefore);
-    	return new ResponseEntity<User> (item, HttpStatus.CREATED);
+    	for (int i = 0; i < itemsJson.size(); i++) {
+    		User user = new User((JSONObject)itemsJson.get(i));
+    		if (user.getFirstName().equals(item.getFirstName()) && user.getLastName().equals(item.getLastName()) && user.getEmail().equals(item.getEmail())) {
+    			isNew = false;
+    			responseEntity.status(HttpStatus.CONFLICT);
+    			break;
+    		}
+    	}
+    	if (isNew) {
+	    	System.out.println("creating user\n" + item.toString());
+	    	item.setId(countBefore);
+	    	itemsJson.add(item.toJsonObject());
+	    	dataUtil.save();
+	    	System.out.println("new user count: " + itemsJson.size() + ", was: " + countBefore);
+	    	responseEntity.status(HttpStatus.ACCEPTED);
+    	}
+    	return responseEntity;
     }
     
     @RequestMapping(method = RequestMethod.PUT)

@@ -11,7 +11,7 @@
 		    success: function (data) { 
 		    	console.log(data)
 		        $.each(data, function(index, element) {
-		            $('#usersList').append("<tr><td>" + element['id'] + "</td><td>" + element.firstName + " " + element.lastName + "</td><td>" + element.email + "</td><td><a href='editUser.html?id=" + element.id + "'>edit</a></td></tr>");
+		            $('#usersList').append("<tr class='item'><td class='itemId'>" + element['id'] + "</td><td class='name'>" + element.firstName + " " + element.lastName + "</td><td class='email'>" + element.email + "</td><td class='edit'><a href='editUser.html?id=" + element.id + "'>edit</a></td></tr>");
 		        });
 		    }
 		});	

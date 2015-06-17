@@ -1,19 +1,29 @@
 {
 	"users": [
 		{
-			"id" : 1,
+			"id" : 0,
 			"firstName": "andy",
 			"lastName": "foobar",
+			"email": "andy.foobar@gmail.com"
 		},
 		{
-			"id": 2,
+			"id": 1,
 			"firstName": "john",
-			"lastName": "doe"
+			"lastName": "doe",
+			"email": "johnDoe@apple.com"
+		},
+		{
+			"id" : 2,
+			"firstName": "andy",
+			"lastName": "smith",
+			"email": "andysmith@adobe.com"
+			
 		},
 		{
 			"id" : 3,
-			"firstName": "andy",
-			"lastName": "smith"
+			"firstName": "chris",
+			"lastName": "thompson",
+			"email": "chris123@aol.com"
 		}
 	]
 }

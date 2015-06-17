@@ -1,36 +1,56 @@
 package main.java.restAPI;
 
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 
-import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONArray;
 import org.json.simple.parser.JSONParser;
 
 public class DataUtil {
 	private String userDir = System.getProperty("user.dir");
 	private String category;
+	private JSONObject jsonObject;
 	private JSONArray items;
 	public DataUtil(String category) {
 		this.category = category;
-		JSONObject jsonObject = getJSONFile(category + ".json");
+		jsonObject = getJSONFile(category + ".json");
 		items = (JSONArray) jsonObject.get(category);
-	}
-	
-	public JSONArray getUsersJson() {
-		JSONObject jsonObject = getJSONFile("users.json");
-		return (JSONArray) jsonObject.get("users");
-	}
-	
-	public JSONArray getProductsJson() {
-		JSONObject jsonObject = getJSONFile("products.json");
-		return (JSONArray) jsonObject.get("products");
 	}
 	
 	public JSONArray getItems() {
 		return this.items;
 	}
 	
-
+	public JSONObject getById(long id) {
+		JSONObject jsonObject = null;
+		for(int i = 0; i < this.items.size(); i++) {
+			if ((long) ((JSONObject) items.get(i)).get("id") == id) {
+				jsonObject = (JSONObject) items.get(i);
+			}
+		}
+		return jsonObject;
+	}
+	
+	public void save() {
+		String filename = userDir + "/data/" + category + "2.json";
+		System.out.println("writing to " + filename);
+		FileWriter file;
+		try {
+			file = new FileWriter(filename);
+			file.write(jsonObject.toString());
+			file.flush();
+			file.close();
+			System.out.println("wrote file to: " + filename);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+	}
+	
 	private JSONObject getJSONFile(String filename) {
 		JSONParser jsonParser = new JSONParser();
 		try {
@@ -39,7 +59,7 @@ public class DataUtil {
     		return jsonObject;
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("error getting json file: "  + filename + "\n" + e.getMessage());
 			return null;
 		}
 	}
