@@ -1,20 +1,29 @@
 package main.java.restAPI;
 
+import org.json.simple.JSONObject;
+
 public class Entitlement {
-	private long entitlementId;
+	private long id;
 	private long userId;
 	private long productId;
 	private boolean active;
 	
 	public Entitlement(long entitlementId, long userId, long productId) {
-		this.entitlementId = entitlementId;
+		this.id = entitlementId;
 		this.userId = userId;
 		this.productId = productId;
 		this.active = true;
 	}
 	
-	public long getEntitlementId() {
-		return entitlementId;
+	public Entitlement(JSONObject jsonObject) {
+		this.id = (long) jsonObject.get("id");
+		this.userId = (long) jsonObject.get("userId");
+		this.productId = (long) jsonObject.get("productId");
+		this.active = (boolean) jsonObject.get("active");
+	}
+	
+	public long getId() {
+		return id;
 	}
 
 	public long getUserId() {

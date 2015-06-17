@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<title>Entitlements List</title>
+	</head>
+	<script type="text/javascript">
+		$.ajax({ 
+		    type: 'GET', 
+		    url: '/entitlements', 
+		    dataType: 'json',
+		    success: function (data) { 
+		    	console.log(data)
+		        $.each(data, function(index, element) {
+		            $('#productsList').append("<tr><td>" + element['id'] + "</td><td>" + element.userId + "</td><td>" + element.productId + "</td><td>" + element.active + "</td><td><a href='edit.html?id=" + element.id + "'>edit</a></td></tr>");
+		        });
+		    }
+		});	
+		
+	</script>
+	<body>
+		<h2>Entitlements List</h2>
+		<table id='productsList' style='border: 1px; padding: 5'>
+			<tr><th>id</th><th>userId</th><th>productId</th><th>active</th></tr>
+		</table>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+{
+	"entitlements": [
+		{
+			"id": 0,
+			"productId": 1,
+			"userId": 2,
+			"purchaseOrderId": 1,
+			"active": true
+		},
+		{
+			"id": 1,
+			"productId": 2,
+			"userId": 2,
+			"purchaseOrderId": 1,
+			"active": true
+		},
+		{
+			"id": 2,
+			"productId": 2,
+			"userId": 1,
+			"purchaseOrderId": 2,
+			"active": false
+		},
+	]
+}
