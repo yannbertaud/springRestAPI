@@ -1,0 +1,26 @@
+<html>
+	<head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<title>List of users</title>
+	</head>
+	<script type="text/javascript">
+		$.ajax({ 
+		    type: 'GET', 
+		    url: '/users', 
+		    dataType: 'json',
+		    success: function (data) { 
+		    	console.log(data)
+		        $.each(data, function(index, element) {
+		            $('#usersList').append("<tr><td>" + element['id'] + "</td><td>" + element.firstName + " " + element.lastName + "</td><td>" + element.email + "</td><td><a href='editUser.html?id=" + element.id + "'>edit</a></td></tr>");
+		        });
+		    }
+		});	
+		
+	</script>
+	<body>
+		<h2>List of users</h2>
+		<table id='usersList' style='border: 1px; padding: 5'>
+			<tr><th>id</th><th>name</th><th>email</th></tr>
+		</table>
+	</body>
+</html>
