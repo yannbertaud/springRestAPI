@@ -1,0 +1,24 @@
+{
+    "products": [
+        {
+            "name": "3ds max 2015",
+            "description": "3ds max 2015 for 3d modeling, animation, rendering",
+            "price": 3000,
+            "id": 0
+        },
+        {
+            "name": "Inventor 2015",
+            "description": "software for mechanical design and simulation",
+            "price": 5000,
+            "id": 1
+        },
+        {
+            "name": "Autocad 2015",
+            "description": "cad software for general design",
+            "price": 2000,
+            "id": 2
+        }
+        
+        
+    ]
+}

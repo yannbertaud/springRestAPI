@@ -1,26 +1,29 @@
 package main.java.restAPI;
 
+import java.util.Date;
+
 public class PurchaseOrder {
-	private int id;
+	private int purchaseOrderId;
 	private int userId;
-	private Product product;
+	private int productId;
+	private Date orderDate;
 	
-	public PurchaseOrder(int userId, Product product) {
+	public PurchaseOrder(int userId, int productId) {
 		this.userId = userId;
-		this.product = product;
+		this.productId = productId;
 		
 	}
 
 	public int getId() {
-		return id;
+		return purchaseOrderId;
 	}
 
 	public int getUserId() {
 		return userId;
 	}
 
-	public Product getProduct() {
-		return product;
+	public int getProductId() {
+		return productId;
 	}
 	
 	

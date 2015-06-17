@@ -1,0 +1,42 @@
+<html>
+    <head>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<title>Edit User</title>
+	</head>
+    <script type='text/javascript'>
+	    var urlParams;
+		(window.onpopstate = function () {
+		    var match,
+		        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+		        search = /([^&=]+)=?([^&]*)/g,
+		        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+		        query  = window.location.search.substring(1);
+		
+		    urlParams = {};
+		    while (match = search.exec(query))
+		       urlParams[decode(match[1])] = decode(match[2]);
+		})();
+		console.log(urlParams);
+        $.ajax({
+            type: 'GET',
+            url: '/users/' + urlParams['id'],
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+                $("[name='firstName']").val(data.firstName);
+                 $("[name='lastName']").val(data.lastName);
+                 $("[name='email']").val(data.email);
+            }
+        });
+    </script>
+    <body>
+    	<form action='/users' method='PUT'>
+			<div><span style='float: left; width: 100px'>first Name: </span><input type='text' name='firstName'/></div>
+			<div><span style='float: left; width: 100px'>Last Name: </span><input type='text' name='lastName'/></div>
+			<div><span style='float: left; width: 100px'>email: </span><input type='text' name='email'/></div>
+			<input type='submit' value='submit'>
+		</form>
+    	
+    </body>
+
+</html>

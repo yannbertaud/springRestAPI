@@ -10,7 +10,7 @@ public class User {
 	private String lastName;
 	private String email;
 	private String password;
-	private long userId;
+	private long id;
 	public User() {
 		
 	}
@@ -19,20 +19,21 @@ public class User {
 		
 	}
 	
-	public User(long userId) {
+	public User(long id) {
 		
 	}
 	
 	public User(JSONObject jsonUser) {
 		this.firstName = (String) jsonUser.get("firstName");
 		this.lastName = (String) jsonUser.get("lastName");
-		this.userId = (long) jsonUser.get("id");
+		this.email = (String) jsonUser.get("email");
+		this.id = (long) jsonUser.get("id");
 	}
 	
-	public boolean create(String firstName, String lastName, long userId) {
+	public boolean create(String firstName, String lastName, long id) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.userId = userId;
+		this.id = id;
 		return true;
 	}
 	
@@ -76,12 +77,12 @@ public class User {
 		this.password = password;
 	}
 
-	public long getUserId() {
-		return userId;
+	public long getId() {
+		return id;
 	}
 
-	public void setUserId(long userId) {
-		this.userId = userId;
+	public void setId(long id) {
+		this.id = id;
 	}
 	
 	public String toString() {
@@ -90,13 +91,13 @@ public class User {
 		sb.append("\nlastName: " + this.lastName);
 		sb.append("\nemail: " + this.email);
 		sb.append("\npassword: " + this.password);
-		sb.append("\nuserId: " + this.userId);
+		sb.append("\nid: " + this.id);
 		return sb.toString();
 	}
 	
 	public JSONObject toJsonObject() {
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.put("userId", this.userId);
+		jsonObject.put("id", this.id);
 		jsonObject.put("firstName", this.firstName);
 		jsonObject.put("lastName", this.lastName);
 		jsonObject.put("email", this.email);
