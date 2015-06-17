@@ -8,6 +8,13 @@ import org.json.simple.parser.JSONParser;
 
 public class DataUtil {
 	private String userDir = System.getProperty("user.dir");
+	private String category;
+	private JSONArray items;
+	public DataUtil(String category) {
+		this.category = category;
+		JSONObject jsonObject = getJSONFile(category + ".json");
+		items = (JSONArray) jsonObject.get(category);
+	}
 	
 	public JSONArray getUsersJson() {
 		JSONObject jsonObject = getJSONFile("users.json");
@@ -19,6 +26,11 @@ public class DataUtil {
 		return (JSONArray) jsonObject.get("products");
 	}
 	
+	public JSONArray getItems() {
+		return this.items;
+	}
+	
+
 	private JSONObject getJSONFile(String filename) {
 		JSONParser jsonParser = new JSONParser();
 		try {

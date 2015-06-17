@@ -1,30 +1,45 @@
 package main.java.restAPI;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.json.simple.JSONObject;
+
 public class PurchaseOrder {
-	private int purchaseOrderId;
-	private int userId;
-	private int productId;
-	private Date orderDate;
+	private long id;
+	private long userId;
+	private long productId;
+	private String orderDate;
 	
-	public PurchaseOrder(int userId, int productId) {
+	public PurchaseOrder(JSONObject jsonPurchaseOrder) {
+		this.id = (long) jsonPurchaseOrder.get("id");
+		this.userId = (long) jsonPurchaseOrder.get("userId");
+		this.productId = (long) jsonPurchaseOrder.get("productId");
+		this.orderDate = (String) jsonPurchaseOrder.get("orderDate") ;
+	}
+	
+	public PurchaseOrder(long userId, long productId) {
 		this.userId = userId;
 		this.productId = productId;
 		
 	}
 
-	public int getId() {
-		return purchaseOrderId;
+	public long getId() {
+		return id;
 	}
 
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
 
-	public int getProductId() {
+	public long getProductId() {
 		return productId;
 	}
 	
+	public String getOrderDate() {
+		return this.orderDate;
+	}
 	
 }

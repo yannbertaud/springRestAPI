@@ -26,11 +26,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/users")
 public class UsersController {
+	private DataUtil dataUtil = new DataUtil("users");
 	
     @RequestMapping(method = RequestMethod.GET)
     public ArrayList<User> getAllUsers() {
     	ArrayList<User> users = new ArrayList<User>();
-    	JSONArray usersJson = this.getUsersJson();
+    	JSONArray usersJson = dataUtil.getItems();
     	for(int i = 0; i < usersJson.size(); i++) {
     		JSONObject jsonUser = (JSONObject) usersJson.get(i);
     		User user = new User(jsonUser);
@@ -41,13 +42,13 @@ public class UsersController {
     
     @RequestMapping(value = "/count")
     public int getUsersCount() {
-    	return this.getUsersJson().size();
+    	return dataUtil.getItems().size();
     }
     
     @RequestMapping(value = "/find")
     public ArrayList<User> find(@RequestParam(value="firstName", required = false) String firstName, @RequestParam(value="lastName", required = false) String lastName) {
     	ArrayList<User> users = new ArrayList<User>();
-    	JSONArray usersJson = this.getUsersJson();
+    	JSONArray usersJson = dataUtil.getItems();
     	for(int i = 0; i < usersJson.size(); i++) {
     		User user = new User((JSONObject) usersJson.get(i));
     		if (user.getFirstName().equals(firstName) && user.getLastName().equals(lastName) ) {
@@ -78,7 +79,7 @@ public class UsersController {
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<User> createUser(@RequestBody User item) {
     	int countBefore = this.getUsersCount();
-    	JSONArray itemsJson = this.getUsersJson();
+    	JSONArray itemsJson = dataUtil.getItems();
     	System.out.println("creating user\n" + item.toString());
     	itemsJson.add(item.toJsonObject());
     	
@@ -89,7 +90,7 @@ public class UsersController {
     @RequestMapping(method = RequestMethod.PUT)
     public ResponseEntity<User> editUser(@RequestBody User item) {
     	int countBefore = this.getUsersCount();
-    	JSONArray itemsJson = this.getUsersJson();
+    	JSONArray itemsJson = dataUtil.getItems();
     	System.out.println("editing user\n" + item.toString());
     	itemsJson.add(item.toJsonObject());
     	
@@ -109,7 +110,7 @@ public class UsersController {
     
     private HashMap<Long, User> getById() {
     	HashMap<Long, User> users = new HashMap<Long, User>();
-    	JSONArray jsonUsers = this.getUsersJson();
+    	JSONArray jsonUsers = dataUtil.getItems();
     	
     	for (int i = 0; i < jsonUsers.size(); i++) {
     		JSONObject jsonUser = (JSONObject) jsonUsers.get(i);
@@ -120,7 +121,7 @@ public class UsersController {
     }
     
     private User getById(long id) {
-    	JSONArray jsonUsers = this.getUsersJson();
+    	JSONArray jsonUsers = dataUtil.getItems();
     	User user = null;
     	for (int i = 0; i < jsonUsers.size(); i++) {
     		JSONObject jsonUser = (JSONObject) jsonUsers.get(i);
@@ -134,10 +135,5 @@ public class UsersController {
     }
     
     
-    private JSONArray getUsersJson() {
-    	DataUtil dataUtil = new DataUtil();
-    	return dataUtil.getUsersJson();
 
-    	
-    }
 }

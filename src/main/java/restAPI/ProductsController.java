@@ -13,17 +13,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/products")
-public class ProductsController extends DataUtil{
-	
+public class ProductsController{
+	private DataUtil dataUtil = new DataUtil("products");
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public ArrayList<Product> getAllProducts() {
 		ArrayList<Product> products = new ArrayList<Product> ();
-		JSONArray productsJson = this.getProductsJson();
+		JSONArray productsJson = dataUtil.getItems();
 		for (int i = 0; i < productsJson.size(); i++) {
 			JSONObject jsonProduct = (JSONObject) productsJson.get(i);
 			Product product = new Product(jsonProduct);
@@ -34,7 +35,25 @@ public class ProductsController extends DataUtil{
 	
 	@RequestMapping(value = "/count")
 	public int getProductCount() {
-		return this.getProductsJson().size();
+		return this.dataUtil.getItems().size();
+	}
+	
+	@RequestMapping(value = "/find")
+	public ArrayList<Product> find(@RequestParam(value = "name", required = false) String name) {
+		ArrayList<Product> items = new ArrayList<Product>();
+		JSONArray itemsJson = dataUtil.getItems();
+		for (int i = 0; i < itemsJson.size(); i++) {
+			Product item = new Product((JSONObject) itemsJson.get(i));
+			if (name == null) {
+				items.add(item);
+			} else if (item.getName().contains(name)) {
+				items.add(item);
+			}
+		}
+		if (items.size() == 0 ) {
+			throw new ItemNotFoundException("Could not find product containing name: " + name);
+		}
+		return items;
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -49,7 +68,7 @@ public class ProductsController extends DataUtil{
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<Product> createProduct(@RequestBody Product item) {
     	int countBefore = this.getProductCount();
-    	JSONArray itemsJson = this.getProductsJson();
+    	JSONArray itemsJson = dataUtil.getItems();
     	System.out.println("creating product\n" + item.toString());
     	itemsJson.add(item.toJsonObject());
     	
@@ -69,7 +88,7 @@ public class ProductsController extends DataUtil{
     
 	
 	private Product getById(long itemId) {
-		JSONArray jsonItems = this.getProductsJson();
+		JSONArray jsonItems = dataUtil.getItems();
 		Product product = null;
 		for (int i = 0; i < jsonItems.size(); i++) {
 			JSONObject jsonItem = (JSONObject) jsonItems.get(i);

@@ -1,0 +1,51 @@
+<html>
+<head>
+<script
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<title>Edit Product</title>
+</head>
+<script type='text/javascript'>
+	    var urlParams;
+		(window.onpopstate = function () {
+		    var match,
+		        pl     = /\+/g,  // Regex for replacing addition symbol with a space
+		        search = /([^&=]+)=?([^&]*)/g,
+		        decode = function (s) { return decodeURIComponent(s.replace(pl, " ")); },
+		        query  = window.location.search.substring(1);
+		
+		    urlParams = {};
+		    while (match = search.exec(query))
+		       urlParams[decode(match[1])] = decode(match[2]);
+		})();
+		console.log(urlParams);
+        $.ajax({
+            type: 'GET',
+            url: '/purchaseOrders/' + urlParams['id'],
+            dataType: 'json',
+            success: function(data) {
+                console.log(data)
+                $("[name='userId']").val(data.userId);
+                 $("[name='productId']").val(data.productId);
+                 $("[name='orderDate']").val(data.orderDate);
+            }
+        });
+    </script>
+<body>
+	<form action='/products' method='PUT'>
+		<div>
+			<span style='float: left; width: 100px'>userId: </span><input
+				type='text' name='userId' />
+		</div>
+		<div>
+			<span style='float: left; width: 100px'>productId: </span><input
+				type='text' name='productId' />
+		</div>
+		<div>
+			<span style='float: left; width: 100px'>date: </span><input
+				type='text' name='orderDate' />
+		</div>
+		<input type='submit' value='submit'>
+	</form>
+
+</body>
+</html>
