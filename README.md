@@ -9,9 +9,11 @@ from browser go to: ```http://localhost:8080/users```
 this will return json list of users
 
 to get count of users:
+
 ```http://localhost:8080/users/count```
 
 to get a specific user:
+
 ```http://localhost:8080/users/1```
 
 
